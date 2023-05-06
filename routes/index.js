@@ -10,7 +10,7 @@ module.exports = function (app) {
   app.use(`${preRoute}/`, authRoute);
   app.use(`${preRoute}/user`, userRoute);
 
-  app.get(`${preRoute}/whois`, AuthToken, (req, res) => {
+  app.get(`${preRoute}/whoIs`, AuthToken, (req, res) => {
     res.json({ user: req.user });
   });
 };
