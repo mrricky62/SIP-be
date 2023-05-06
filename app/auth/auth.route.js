@@ -1,25 +1,9 @@
+const { RegisterMiddleware, LoginMiddleware } = require("./auth.middleware");
+const { Register, Login } = require("./auth.controller");
 const express = require("express");
-const {
-  RegisterMiddleware,
-  LoginMiddware,
-  SendEmailMiddleware,
-  ForgotPasswordMiddleware,
-} = require("./auth.middleware");
-const {
-  Register,
-  Login,
-  SendEmail,
-  ForgotPassword,
-} = require("./auth.controller");
 const router = express.Router();
 
 router.post("/register", RegisterMiddleware, Register);
-router.post("/login", LoginMiddware, Login);
-router.post("/send-email", SendEmailMiddleware, SendEmail);
-router.post(
-  "/forgot-password/:token",
-  ForgotPasswordMiddleware,
-  ForgotPassword
-);
+router.post("/login", LoginMiddleware, Login);
 
 module.exports = router;
