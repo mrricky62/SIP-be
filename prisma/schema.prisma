@@ -16,7 +16,7 @@ datasource db {
 // }
 
 model tbm_user {
-  id         Int      @id @default(autoincrement())
+  id         String   @id @default(uuid())
   nip        String   @unique
   nama       String?  @default("")
   pangkat    String?  @default("")
