@@ -26,6 +26,8 @@ module.exports = {
       const user = await FetchUserByNIP(nip);
       if (!user) return BadRequest(res, "NIP not registered");
 
+      if (!user.is_active) return BadRequest(res, "User is not active");
+
       const isPasswordValid = await Compare(password, user.password);
       if (!isPasswordValid) return BadRequest(res, "Password is incorrect");
 

@@ -23,6 +23,7 @@ model tbm_user {
   golongan   String?  @default("")
   password   String
   is_admin   Boolean  @default(false)
+  is_active  Boolean  @default(true)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
