@@ -2,14 +2,8 @@ const { Compare } = require("../../utils/hash-password");
 const {
   BadRequest,
   InternalServerError,
-  Unauthorized,
 } = require("../../utils/http-response");
-const { DecryptToken } = require("../../utils/jwt");
-const {
-  FetchUserByEmail,
-  FetchUserById,
-  FetchUserByNIP,
-} = require("../user/user.repository");
+const { FetchUserByNIP } = require("../user/user.repository");
 
 module.exports = {
   RegisterMiddleware: async (req, res, next) => {
@@ -27,10 +21,10 @@ module.exports = {
   },
   LoginMiddleware: async (req, res, next) => {
     try {
-      const { email, password } = req.body;
+      const { nip, password } = req.body;
 
-      const user = await FetchUserByEmail(email);
-      if (!user) return BadRequest(res, "Email not registered");
+      const user = await FetchUserByNIP(nip);
+      if (!user) return BadRequest(res, "NIP not registered");
 
       const isPasswordValid = await Compare(password, user.password);
       if (!isPasswordValid) return BadRequest(res, "Password is incorrect");
