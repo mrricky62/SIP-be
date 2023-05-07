@@ -16,14 +16,160 @@ datasource db {
 // }
 
 model tbm_user {
+  id          String            @id @default(uuid())
+  nip         String            @unique
+  nama        String?           @default("")
+  pangkat     String?           @default("")
+  golongan    String?           @default("")
+  password    String
+  is_admin    Boolean           @default(false)
+  is_active   Boolean           @default(true)
+  created_at  DateTime          @default(now())
+  updated_at  DateTime          @updatedAt
+  gaji        tbl_gaji[]
+  tunjangan   tbl_tunjangan[]
+  uang_makan  tbl_uang_makan[]
+  spd         tbl_spd[]
+  uang_lembur tbl_uang_lembur[]
+}
+
+model tbl_gaji {
   id         String   @id @default(uuid())
-  nip        String   @unique
-  nama       String?  @default("")
-  pangkat    String?  @default("")
-  golongan   String?  @default("")
-  password   String
-  is_admin   Boolean  @default(false)
-  is_active  Boolean  @default(true)
+  tanggal    DateTime @default(now())
+  kdgol      String
+  nama_rek   String
+  nama_bank  String
+  no_rek     String
+  gaji_pokok Decimal? @default(0)
+
+  tunj_istri  Decimal? @default(0)
+  tunj_anak   Decimal? @default(0)
+  tunj_pns    Decimal? @default(0)
+  tunj_struk  Decimal? @default(0)
+  tunj_fungs  Decimal? @default(0)
+  tunj_daerah Decimal? @default(0)
+  tunj_pencil Decimal? @default(0)
+  tunj_tjlain Decimal? @default(0)
+  tunj_kompen Decimal? @default(0)
+  tunj_beras  Decimal? @default(0)
+  tunj_pph    Decimal? @default(0)
+
+  pembulatan Decimal? @default(0)
+
+  pot_pfkbul Decimal? @default(0)
+  pot_pfk2   Decimal? @default(0)
+  pot_pfk10  Decimal? @default(0)
+  pot_pph    Decimal? @default(0)
+  pot_swrum  Decimal? @default(0)
+  pot_kelbtj Decimal? @default(0)
+  pot_lain   Decimal? @default(0)
+  pot_tabrum Decimal? @default(0)
+
+  bersih Decimal? @default(0)
+
+  user_id String
+  user    tbm_user @relation(fields: [user_id], references: [id])
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model tbl_tunjangan {
+  id                String   @id @default(uuid())
+  tanggal           DateTime @default(now())
+  grade             String
+  besaran_tunjangan Decimal  @default(0)
+
+  pot_hukdis Decimal? @default(0)
+  pot_absen  Decimal? @default(0)
+  pot_pph    Decimal? @default(0)
+
+  // potongan excel
+  pot_iwp         Decimal? @default(0)
+  pot_dkp         Decimal? @default(0)
+  pot_pinjaman    Decimal? @default(0)
+  pot_tmptinggal  Decimal? @default(0)
+  pot_agama       Decimal? @default(0)
+  pot_darmawanita Decimal? @default(0)
+  pot_bapors      Decimal? @default(0)
+  pot_kasangkatan Decimal? @default(0)
+  pot_uangmakan   Decimal? @default(0)
+  pot_lain        Decimal? @default(0)
+  jumlah_potongan Decimal? @default(0)
+
+  tunj_pph Decimal? @default(0)
+
+  permintaan   Decimal? @default(0)
+  tunj_dibayar Decimal? @default(0)
+
+  nama_bank String
+  no_rek    String
+
+  user_id String
+  user    tbm_user @relation(fields: [user_id], references: [id])
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model tbl_uang_makan {
+  id          String   @id @default(uuid())
+  tanggal     DateTime @default(now())
+  tanggal_spm DateTime @default(now())
+  kdgol       String
+
+  jml_hari Int?     @default(0)
+  tarif    Decimal? @default(0)
+  kotor    Decimal? @default(0)
+  pph      Decimal? @default(0)
+  bersih   Decimal? @default(0)
+
+  no_rek String
+
+  user_id String
+  user    tbm_user @relation(fields: [user_id], references: [id])
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model tbl_spd {
+  id             String   @id @default(uuid())
+  no_spm         String
+  tanggal        DateTime @default(now())
+  tujuan         String
+  sifat          String
+  uang_harian    Decimal? @default(0)
+  uang_transport Decimal? @default(0)
+  uang_hotel     Decimal? @default(0)
+  total          Decimal? @default(0)
+  lama           Int?     @default(0)
+
+  status String @default("PENDING")
+
+  user_id String
+  user    tbm_user @relation(fields: [user_id], references: [id])
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model tbl_uang_lembur {
+  id        String   @id @default(uuid())
+  tanggal   DateTime @default(now())
+  jam_kerja Int?     @default(0)
+  jam_libur Int?     @default(0)
+  jam_makan Int?     @default(0)
+  jml_hari  Int?     @default(0)
+
+  lembur Decimal? @default(0)
+  makan  Decimal? @default(0)
+  pph    Decimal? @default(0)
+  bersih Decimal? @default(0)
+
+  user_id String
+  user    tbm_user @relation(fields: [user_id], references: [id])
+
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
