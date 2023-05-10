@@ -35,7 +35,7 @@ model tbm_user {
 
 model tbl_gaji {
   id         String   @id @default(uuid())
-  tanggal    DateTime @default(now())
+  tanggal    DateTime @default(now()) // bulan dan tahun
   kdgol      String
   nama_rek   String
   nama_bank  String
@@ -76,7 +76,7 @@ model tbl_gaji {
 
 model tbl_tunjangan {
   id                String   @id @default(uuid())
-  tanggal           DateTime @default(now())
+  tanggal           DateTime @default(now()) // bulan dan tahun
   grade             String
   besaran_tunjangan Decimal  @default(0)
 
@@ -97,8 +97,8 @@ model tbl_tunjangan {
   pot_lain        Decimal? @default(0)
   jumlah_potongan Decimal? @default(0)
 
-  tunj_pph Decimal? @default(0)
-
+  tunj_netto   Decimal? @default(0)
+  tunj_pph     Decimal? @default(0)
   permintaan   Decimal? @default(0)
   tunj_dibayar Decimal? @default(0)
 
@@ -114,7 +114,7 @@ model tbl_tunjangan {
 
 model tbl_uang_makan {
   id          String   @id @default(uuid())
-  tanggal     DateTime @default(now())
+  tanggal     DateTime @default(now()) // bulan dan tahun
   tanggal_spm DateTime @default(now())
   kdgol       String
 
@@ -134,16 +134,16 @@ model tbl_uang_makan {
 }
 
 model tbl_spd {
-  id             String   @id @default(uuid())
-  no_spm         String
-  tanggal        DateTime @default(now())
-  tujuan         String
-  sifat          String
-  uang_harian    Decimal? @default(0)
-  uang_transport Decimal? @default(0)
-  uang_hotel     Decimal? @default(0)
-  total          Decimal? @default(0)
-  lama           Int?     @default(0)
+  id              String   @id @default(uuid())
+  no_spm          String
+  tanggal         DateTime @default(now())
+  tujuan          String
+  sifat           String
+  uang_harian     Decimal? @default(0)
+  uang_transport  Decimal? @default(0)
+  uang_penginapan Decimal? @default(0)
+  total           Decimal? @default(0)
+  lama            Int?     @default(0)
 
   status String @default("PENDING")
 
@@ -156,11 +156,10 @@ model tbl_spd {
 
 model tbl_uang_lembur {
   id        String   @id @default(uuid())
-  tanggal   DateTime @default(now())
+  tanggal   DateTime @default(now()) // bulan dan tahun
   jam_kerja Int?     @default(0)
   jam_libur Int?     @default(0)
   jam_makan Int?     @default(0)
-  jml_hari  Int?     @default(0)
 
   lembur Decimal? @default(0)
   makan  Decimal? @default(0)
