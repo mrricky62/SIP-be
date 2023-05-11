@@ -5,6 +5,21 @@ module.exports = {
   FetchUser: async () => {
     return await prisma.tbm_user.findMany();
   },
+  FetchUserNotAdmin: async () => {
+    return await prisma.tbm_user.findMany({
+      where: {
+        is_admin: false,
+      },
+      select: {
+        id: true,
+        nip: true,
+        nama: true,
+      },
+      orderBy: {
+        nama: "asc",
+      },
+    });
+  },
   FetchUserByNIP: async (nip) => {
     return await prisma.tbm_user.findUnique({
       where: {
