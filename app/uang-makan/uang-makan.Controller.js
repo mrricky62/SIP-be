@@ -11,7 +11,10 @@ const moment = require("moment/moment");
 module.exports = {
   GetUangMakan: async (req, res) => {
     try {
-      const result = await FetchUangMakan();
+      const { user } = req;
+      const userId = user.is_admin ? "" : user.id;
+
+      const result = await FetchUangMakan(userId);
 
       result.forEach((item) => {
         item.bulan = moment(item.tanggal).format("MMMM");
