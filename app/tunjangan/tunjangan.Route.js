@@ -1,12 +1,10 @@
-const { CreateTunjangan } = require("./tunjangan.Controller");
+const { CreateTunjangan, GetTunjangan } = require("./tunjangan.Controller");
 const { CreateTunjanganMiddleware } = require("./tunjangan.Middleware");
 
 const express = require("express");
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.json({ message: "Hello World" });
-});
+router.get("/", GetTunjangan);
 
 router.post("/", CreateTunjanganMiddleware, CreateTunjangan);
 
