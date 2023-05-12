@@ -23,6 +23,16 @@ module.exports = {
       },
     });
   },
+  FetchUangLemburById: async (id) => {
+    return await prisma.tbl_uang_lembur.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        user: true,
+      },
+    });
+  },
   StoreUangLembur: async (payload) => {
     return await prisma.tbl_uang_lembur.create({
       data: payload,

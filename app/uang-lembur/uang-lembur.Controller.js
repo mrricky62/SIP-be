@@ -2,6 +2,7 @@ const { InternalServerError, Ok } = require("../../utils/http-response");
 const {
   StoreUangLembur,
   FetchUangLembur,
+  FetchUangLemburById,
 } = require("./uang-lembur.Repository");
 const moment = require("moment/moment");
 
@@ -17,6 +18,22 @@ module.exports = {
         item.tahun = moment(item.tanggal).format("YYYY");
         item.jumlah_jam = +item.jam_kerja + +item.jam_libur + +item.jam_makan;
       });
+
+      return Ok(res, result, "Uang Lembur fetched successfully");
+    } catch (error) {
+      return InternalServerError(res, error, "Failed to fetch Uang Lembur");
+    }
+  },
+  GetUangLemburById: async (req, res) => {
+    try {
+      const result = await FetchUangLemburById(req.params.id);
+
+      result.tanggal_spm = moment(result.tanggal_spm).format("YYYY-MM-DD");
+      result.tanggal = moment(result.tanggal).format("YYYY-MM");
+      result.bulan = moment(result.tanggal).format("MMMM");
+      result.tahun = moment(result.tanggal).format("YYYY");
+      result.jumlah_jam =
+        +result.jam_kerja + +result.jam_libur + +result.jam_makan;
 
       return Ok(res, result, "Uang Lembur fetched successfully");
     } catch (error) {
