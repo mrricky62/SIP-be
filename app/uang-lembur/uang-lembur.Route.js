@@ -1,12 +1,10 @@
 const { CreateUangLemburMiddleware } = require("./uang-lembur.Middleware");
-const { CreateUangLembur } = require("./uang-lembur.Controller");
+const { CreateUangLembur, GetUangLembur } = require("./uang-lembur.Controller");
 
 const express = require("express");
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.json({ message: "Hello World" });
-});
+router.get("/", GetUangLembur);
 router.post("/", CreateUangLemburMiddleware, CreateUangLembur);
 
 module.exports = router;
