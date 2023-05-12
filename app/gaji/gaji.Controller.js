@@ -9,6 +9,21 @@ module.exports = {
 
       result.forEach((item) => {
         item.tanggal = moment(result.tanggal).format("YYYY-MM");
+
+        let total_potongan = 0;
+        let total_tunjangan = 0;
+
+        Object.keys(item).forEach((key) => {
+          if (key.startsWith("pot_")) {
+            total_potongan += +item[key];
+          }
+          if (key.startsWith("tunj_")) {
+            total_tunjangan += +item[key];
+          }
+        });
+
+        item.total_potongan = total_potongan;
+        item.total_tunjangan = total_tunjangan;
       });
 
       return Ok(res, result, "Gaji fetched successfully");
