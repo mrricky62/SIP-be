@@ -44,4 +44,11 @@ module.exports = {
       data: payload,
     });
   },
+  DestroyUangMakan: async (id) => {
+    return await prisma.tbl_uang_makan.delete({
+      where: {
+        id: id,
+      },
+    });
+  },
 };

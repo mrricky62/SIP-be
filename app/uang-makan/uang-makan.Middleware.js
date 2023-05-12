@@ -39,4 +39,19 @@ module.exports = {
       );
     }
   },
+  DeleteUangMakanMiddleware: (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const uangMakan = FetchUangMakanById(id);
+      if (!uangMakan) return BadRequest(res, "Uang makan not found");
+
+      next();
+    } catch (error) {
+      return InternalServerError(
+        res,
+        error,
+        "Failed to edit uang makan in middleware"
+      );
+    }
+  },
 };
