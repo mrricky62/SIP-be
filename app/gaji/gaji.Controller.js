@@ -1,6 +1,11 @@
 const moment = require("moment/moment");
 const { InternalServerError, Ok } = require("../../utils/http-response");
-const { StoreGaji, FetchGaji, FetchGajiById } = require("./gaji.Repository");
+const {
+  StoreGaji,
+  FetchGaji,
+  FetchGajiById,
+  UpdateGaji,
+} = require("./gaji.Repository");
 
 module.exports = {
   GetGaji: async (req, res) => {
@@ -67,6 +72,16 @@ module.exports = {
     } catch (error) {
       console.log(error);
       return InternalServerError(res, error, "Failed to create gaji");
+    }
+  },
+  EditGaji: async (req, res) => {
+    try {
+      await UpdateGaji(req.params.id, req.body);
+
+      return Ok(res, {}, "Gaji updated successfully");
+    } catch (error) {
+      console.log(error);
+      return InternalServerError(res, error, "Failed to update gaji");
     }
   },
 };

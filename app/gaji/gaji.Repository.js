@@ -19,10 +19,21 @@ module.exports = {
       where: {
         id: id,
       },
+      include: {
+        user: true,
+      },
     });
   },
   StoreGaji: async (payload) => {
     return await prisma.tbl_gaji.create({
+      data: payload,
+    });
+  },
+  UpdateGaji: async (id, payload) => {
+    return await prisma.tbl_gaji.update({
+      where: {
+        id: id,
+      },
       data: payload,
     });
   },
