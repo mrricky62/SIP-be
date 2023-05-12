@@ -17,6 +17,16 @@ module.exports = {
       },
     });
   },
+  FetchTunjanganById: async (id) => {
+    return await prisma.tbl_tunjangan.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        user: true,
+      },
+    });
+  },
   StoreTunjangan: async (payload) => {
     return await prisma.tbl_tunjangan.create({
       data: payload,
