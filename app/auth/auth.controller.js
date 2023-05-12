@@ -1,7 +1,11 @@
 const { Encrypt } = require("../../utils/hash-password");
 const { Ok, InternalServerError } = require("../../utils/http-response");
 const { EncryptToken } = require("../../utils/jwt");
-const { StoreUser, FetchUserByNIP } = require("../user/user.repository");
+const {
+  StoreUser,
+  FetchUserByNIP,
+  UpdateUser,
+} = require("../user/user.repository");
 
 module.exports = {
   Register: async (req, res) => {
@@ -37,6 +41,17 @@ module.exports = {
       return Ok(res, payload, "User logged in successfully");
     } catch (error) {
       return InternalServerError(res, error, "Failed to login user");
+    }
+  },
+  ChangePassword: async (req, res) => {
+    try {
+      await UpdateUser(req.user.id, {
+        password: await Encrypt(req.body.new_password),
+      });
+
+      return Ok(res, null, "Password changed successfully");
+    } catch (error) {
+      return InternalServerError(res, error, "Failed to change password");
     }
   },
 };

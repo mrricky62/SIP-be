@@ -3,7 +3,7 @@ const {
   BadRequest,
   InternalServerError,
 } = require("../../utils/http-response");
-const { FetchUserByNIP } = require("../user/user.repository");
+const { FetchUserByNIP, FetchUserById } = require("../user/user.repository");
 
 module.exports = {
   RegisterMiddleware: async (req, res, next) => {
@@ -12,7 +12,7 @@ module.exports = {
       const { nip } = body;
 
       const user = await FetchUserByNIP(nip);
-      if (user) return BadRequest(res, "NIP already registered");
+      if (user) return BadRequest(res, {}, "NIP already registered");
 
       next();
     } catch (error) {
@@ -26,14 +26,31 @@ module.exports = {
       const user = await FetchUserByNIP(nip);
       if (!user) return BadRequest(res, "NIP not registered");
 
-      if (!user.is_active) return BadRequest(res, "User is not active");
+      if (!user.is_active) return BadRequest(res, {}, "User is not active");
 
       const isPasswordValid = await Compare(password, user.password);
-      if (!isPasswordValid) return BadRequest(res, "Password is incorrect");
+      if (!isPasswordValid) return BadRequest(res, {}, "Password is incorrect");
 
       next();
     } catch (error) {
       return InternalServerError(res, error, "Failed to login user");
+    }
+  },
+  ChangePasswordMiddleware: async (req, res, next) => {
+    try {
+      const user = await FetchUserById(req.user.id);
+      if (!user) return BadRequest(res, "User not found");
+
+      const isPasswordValid = await Compare(
+        req.body.old_password,
+        user.password
+      );
+      if (!isPasswordValid) return BadRequest(res, {}, "Password is incorrect");
+
+      next();
+    } catch (error) {
+      console.log(error);
+      return InternalServerError(res, error, "Failed to change password");
     }
   },
 };
