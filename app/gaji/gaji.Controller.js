@@ -11,7 +11,10 @@ const {
 module.exports = {
   GetGaji: async (req, res) => {
     try {
-      const result = await FetchGaji();
+      const { user } = req;
+      const userId = user.is_admin ? "" : user.id;
+
+      const result = await FetchGaji(userId);
 
       result.forEach((item) => {
         item.tanggal = moment(result.tanggal).format("YYYY-MM");

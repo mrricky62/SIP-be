@@ -2,8 +2,11 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 module.exports = {
-  FetchGaji: async () => {
+  FetchGaji: async (userId) => {
     return await prisma.tbl_gaji.findMany({
+      where: {
+        ...(userId && { user_id: userId }),
+      },
       include: {
         user: {
           select: {
