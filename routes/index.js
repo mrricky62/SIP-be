@@ -5,6 +5,7 @@ const userRoute = require("../app/user/user.route");
 
 const gajiRoute = require("../app/gaji/gaji.Route");
 const tunjanganRoute = require("../app/tunjangan/tunjangan.Route");
+const uangMakanRoute = require("../app/uang-makan/uang-makan.Route");
 
 module.exports = function (app) {
   const apiVersion = process.env.API_VERSION || "v1";
@@ -16,6 +17,7 @@ module.exports = function (app) {
 
   app.use(`${preRoute}/gaji`, AuthToken, gajiRoute);
   app.use(`${preRoute}/tunjangan`, AuthToken, tunjanganRoute);
+  app.use(`${preRoute}/uang-makan`, AuthToken, uangMakanRoute);
 
   app.get(`${preRoute}/whoIs`, AuthToken, (req, res) => {
     res.json({ user: req.user });
