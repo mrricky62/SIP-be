@@ -46,4 +46,11 @@ module.exports = {
       data: payload,
     });
   },
+  DestroyUangLembur: async (id) => {
+    return await prisma.tbl_uang_lembur.delete({
+      where: {
+        id: id,
+      },
+    });
+  },
 };

@@ -4,6 +4,7 @@ const {
   FetchUangLembur,
   FetchUangLemburById,
   UpdateUangLembur,
+  DestroyUangLembur,
 } = require("./uang-lembur.Repository");
 const moment = require("moment/moment");
 
@@ -62,6 +63,15 @@ module.exports = {
     } catch (error) {
       console.log(error);
       return InternalServerError(res, error, "Failed to update Uang Lembur");
+    }
+  },
+  DeleteUangLembur: async (req, res) => {
+    try {
+      await DestroyUangLembur(req.params.id);
+
+      return Ok(res, {}, "Uang Lembur deleted successfully");
+    } catch (error) {
+      return InternalServerError(res, error, "Failed to delete Uang Lembur");
     }
   },
 };

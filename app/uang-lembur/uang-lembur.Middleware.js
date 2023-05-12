@@ -43,4 +43,19 @@ module.exports = {
       );
     }
   },
+  DeleteUangLemburMiddleware: (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const uangLembur = FetchUangLemburById(id);
+      if (!uangLembur) return BadRequest(res, "Uang Lembur not found");
+
+      next();
+    } catch (error) {
+      return InternalServerError(
+        res,
+        error,
+        "Failed to create uang lembur in middleware"
+      );
+    }
+  },
 };
