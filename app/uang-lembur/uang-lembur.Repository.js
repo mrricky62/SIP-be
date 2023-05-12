@@ -2,8 +2,11 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 module.exports = {
-  FetchUangLembur: async () => {
+  FetchUangLembur: async (userId) => {
     return await prisma.tbl_uang_lembur.findMany({
+      where: {
+        ...(userId && { user_id: userId }),
+      },
       select: {
         id: true,
         user: {

@@ -11,7 +11,10 @@ const moment = require("moment/moment");
 module.exports = {
   GetUangLembur: async (req, res) => {
     try {
-      const result = await FetchUangLembur();
+      const { user } = req;
+      const userId = user.is_admin ? "" : user.id;
+
+      const result = await FetchUangLembur(userId);
 
       result.forEach((item) => {
         item.tanggal_spm = moment(item.tanggal_spm).format("DD MMMM YYYY");
