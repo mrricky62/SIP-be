@@ -5,6 +5,7 @@ const {
   FetchGaji,
   FetchGajiById,
   UpdateGaji,
+  DestroyGaji,
 } = require("./gaji.Repository");
 
 module.exports = {
@@ -82,6 +83,15 @@ module.exports = {
     } catch (error) {
       console.log(error);
       return InternalServerError(res, error, "Failed to update gaji");
+    }
+  },
+  DeleteGaji: async (req, res) => {
+    try {
+      await DestroyGaji(req.params.id);
+
+      return Ok(res, {}, "Gaji deleted successfully");
+    } catch (error) {
+      return InternalServerError(res, error, "Failed to delete gaji");
     }
   },
 };

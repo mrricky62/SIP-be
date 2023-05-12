@@ -35,4 +35,20 @@ module.exports = {
       );
     }
   },
+  DeleteGajiMiddleware: (req, res, next) => {
+    try {
+      const { id } = req.params;
+
+      const gaji = FetchGajiById(id);
+      if (!gaji) return BadRequest(res, "Gaji not found");
+
+      next();
+    } catch (error) {
+      return InternalServerError(
+        res,
+        error,
+        "Failed to edit gaji in middleware"
+      );
+    }
+  },
 };

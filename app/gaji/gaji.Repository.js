@@ -12,6 +12,9 @@ module.exports = {
           },
         },
       },
+      orderBy: {
+        created_at: "desc",
+      },
     });
   },
   FetchGajiById: async (id) => {
@@ -35,6 +38,13 @@ module.exports = {
         id: id,
       },
       data: payload,
+    });
+  },
+  DestroyGaji: async (id) => {
+    return await prisma.tbl_gaji.delete({
+      where: {
+        id: id,
+      },
     });
   },
 };
