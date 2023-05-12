@@ -1,5 +1,9 @@
 const { InternalServerError, Ok } = require("../../utils/http-response");
-const { StoreUangMakan, FetchUangMakan } = require("./uang-makan.Repository");
+const {
+  StoreUangMakan,
+  FetchUangMakan,
+  FetchUangMakanById,
+} = require("./uang-makan.Repository");
 const moment = require("moment/moment");
 
 module.exports = {
@@ -13,6 +17,20 @@ module.exports = {
         item.tanggal = moment(item.tanggal).format("YYYY-MM");
         item.tanggal_spm = moment(item.tanggal_spm).format("DD MMMM YYYY");
       });
+
+      return Ok(res, result, "Uang makan fetched successfully");
+    } catch (error) {
+      return InternalServerError(res, error, "Failed to get uang makan");
+    }
+  },
+  GetUangMakanById: async (req, res) => {
+    try {
+      const result = await FetchUangMakanById(req.params.id);
+
+      result.bulan = moment(result.tanggal).format("MMMM");
+      result.tahun = moment(result.tanggal).format("YYYY");
+      result.tanggal = moment(result.tanggal).format("YYYY-MM");
+      result.tanggal_spm = moment(result.tanggal_spm).format("DD MMMM YYYY");
 
       return Ok(res, result, "Uang makan fetched successfully");
     } catch (error) {

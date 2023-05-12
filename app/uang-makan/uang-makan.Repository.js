@@ -21,6 +21,16 @@ module.exports = {
       },
     });
   },
+  FetchUangMakanById: async (id) => {
+    return await prisma.tbl_uang_makan.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        user: true,
+      },
+    });
+  },
   StoreUangMakan: async (payload) => {
     return await prisma.tbl_uang_makan.create({
       data: payload,

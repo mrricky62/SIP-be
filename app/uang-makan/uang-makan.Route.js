@@ -1,9 +1,15 @@
 const express = require("express");
 const { CreateUangMakanMiddleware } = require("./uang-makan.Middleware");
-const { CreateUangMakan, GetUangMakan } = require("./uang-makan.Controller");
+const {
+  CreateUangMakan,
+  GetUangMakan,
+  GetUangMakanById,
+} = require("./uang-makan.Controller");
 const router = express.Router();
 
 router.get("/", GetUangMakan);
+router.get("/:id", GetUangMakanById);
+
 router.post("/", CreateUangMakanMiddleware, CreateUangMakan);
 
 module.exports = router;
