@@ -2,8 +2,11 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 module.exports = {
-  FetchTunjangan: async () => {
+  FetchTunjangan: async (userId) => {
     return await prisma.tbl_tunjangan.findMany({
+      where: {
+        ...(userId && { user_id: userId }),
+      },
       include: {
         user: {
           select: {

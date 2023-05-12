@@ -9,7 +9,7 @@ const {
   CreateGajiMiddleware,
   EditGajiMiddleware,
   DeleteGajiMiddleware,
-} = require("./gaji.MIddleware");
+} = require("./gaji.Middleware");
 
 const express = require("express");
 const router = express.Router();
