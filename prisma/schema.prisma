@@ -135,8 +135,8 @@ model tbl_uang_makan {
 
 model tbl_spd {
   id              String   @id @default(uuid())
-  no_spm          String
   tanggal         DateTime @default(now())
+  tanggal_spm     DateTime @default(now())
   tujuan          String
   sifat           String
   uang_harian     Decimal? @default(0)
