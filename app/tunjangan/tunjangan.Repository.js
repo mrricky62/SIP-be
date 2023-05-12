@@ -32,4 +32,12 @@ module.exports = {
       data: payload,
     });
   },
+  UpdateTunjangan: async (id, payload) => {
+    return await prisma.tbl_tunjangan.update({
+      where: {
+        id: id,
+      },
+      data: payload,
+    });
+  },
 };

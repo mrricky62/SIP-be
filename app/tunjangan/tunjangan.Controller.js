@@ -3,6 +3,7 @@ const {
   StoreTunjangan,
   FetchTunjangan,
   FetchTunjanganById,
+  UpdateTunjangan,
 } = require("./tunjangan.Repository");
 const moment = require("moment/moment");
 
@@ -38,6 +39,15 @@ module.exports = {
       return Ok(res, {}, "Tunjangan created successfully");
     } catch (error) {
       return InternalServerError(res, error, "Failed to create tunjangan");
+    }
+  },
+  EditTunjangan: async (req, res) => {
+    try {
+      await UpdateTunjangan(req.params.id, req.body);
+
+      return Ok(res, {}, "Tunjangan updated successfully");
+    } catch (error) {
+      return InternalServerError(res, error, "Failed to update tunjangan");
     }
   },
 };
