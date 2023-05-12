@@ -3,6 +3,7 @@ const {
   StoreUangLembur,
   FetchUangLembur,
   FetchUangLemburById,
+  UpdateUangLembur,
 } = require("./uang-lembur.Repository");
 const moment = require("moment/moment");
 
@@ -49,6 +50,18 @@ module.exports = {
     } catch (error) {
       console.log(error);
       return InternalServerError(res, error, "Failed to create Uang Lembur");
+    }
+  },
+  EditUangLembur: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const body = req.body;
+      await UpdateUangLembur(id, body);
+
+      return Ok(res, {}, "Uang Lembur updated successfully");
+    } catch (error) {
+      console.log(error);
+      return InternalServerError(res, error, "Failed to update Uang Lembur");
     }
   },
 };

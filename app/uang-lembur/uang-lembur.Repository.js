@@ -38,4 +38,12 @@ module.exports = {
       data: payload,
     });
   },
+  UpdateUangLembur: async (id, payload) => {
+    return await prisma.tbl_uang_lembur.update({
+      where: {
+        id: id,
+      },
+      data: payload,
+    });
+  },
 };
