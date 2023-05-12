@@ -14,6 +14,13 @@ module.exports = {
       },
     });
   },
+  FetchGajiById: async (id) => {
+    return await prisma.tbl_gaji.findUnique({
+      where: {
+        id: id,
+      },
+    });
+  },
   StoreGaji: async (payload) => {
     return await prisma.tbl_gaji.create({
       data: payload,
