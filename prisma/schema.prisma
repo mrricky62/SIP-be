@@ -155,11 +155,12 @@ model tbl_spd {
 }
 
 model tbl_uang_lembur {
-  id        String   @id @default(uuid())
-  tanggal   DateTime @default(now()) // bulan dan tahun
-  jam_kerja Int?     @default(0)
-  jam_libur Int?     @default(0)
-  jam_makan Int?     @default(0)
+  id          String   @id @default(uuid())
+  tanggal     DateTime @default(now()) // bulan dan tahun
+  tanggal_spm DateTime @default(now())
+  jam_kerja   Int?     @default(0)
+  jam_libur   Int?     @default(0)
+  jam_makan   Int?     @default(0)
 
   lembur Decimal? @default(0)
   makan  Decimal? @default(0)
