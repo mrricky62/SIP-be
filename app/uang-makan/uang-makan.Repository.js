@@ -36,4 +36,12 @@ module.exports = {
       data: payload,
     });
   },
+  UpdateUangMakan: async (id, payload) => {
+    return await prisma.tbl_uang_makan.update({
+      where: {
+        id: id,
+      },
+      data: payload,
+    });
+  },
 };
