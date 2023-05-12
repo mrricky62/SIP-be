@@ -40,4 +40,11 @@ module.exports = {
       data: payload,
     });
   },
+  DestroyTunjangan: async (id) => {
+    return await prisma.tbl_tunjangan.delete({
+      where: {
+        id: id,
+      },
+    });
+  },
 };

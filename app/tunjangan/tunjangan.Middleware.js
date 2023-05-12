@@ -36,4 +36,20 @@ module.exports = {
       );
     }
   },
+  DeleteTunjanganMiddleware: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+
+      const tunjangan = await FetchTunjanganById(id);
+      if (!tunjangan) return BadRequest(res, "Tunjangan not found");
+
+      next();
+    } catch (error) {
+      return InternalServerError(
+        res,
+        error,
+        "Failed to create tunjangan in middleware"
+      );
+    }
+  },
 };

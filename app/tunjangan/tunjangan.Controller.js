@@ -4,6 +4,7 @@ const {
   FetchTunjangan,
   FetchTunjanganById,
   UpdateTunjangan,
+  DestroyTunjangan,
 } = require("./tunjangan.Repository");
 const moment = require("moment/moment");
 
@@ -48,6 +49,15 @@ module.exports = {
       return Ok(res, {}, "Tunjangan updated successfully");
     } catch (error) {
       return InternalServerError(res, error, "Failed to update tunjangan");
+    }
+  },
+  DeleteTunjangan: async (req, res) => {
+    try {
+      await DestroyTunjangan(req.params.id);
+
+      return Ok(res, {}, "Tunjangan deleted successfully");
+    } catch (error) {
+      return InternalServerError(res, error, "Failed to delete tunjangan");
     }
   },
 };
