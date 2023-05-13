@@ -24,7 +24,9 @@ module.exports = {
       const { nip, password } = req.body;
 
       const user = await FetchUserByNIP(nip);
-      if (!user) return BadRequest(res, "NIP not registered");
+      if (!user) return BadRequest(res, {}, "NIP not registered");
+
+      console.log(user);
 
       if (!user.is_active) return BadRequest(res, {}, "User is not active");
 
@@ -33,7 +35,12 @@ module.exports = {
 
       next();
     } catch (error) {
-      return InternalServerError(res, error, "Failed to login user");
+      console.log(error);
+      return InternalServerError(
+        res,
+        error,
+        "Failed to login user in middleware"
+      );
     }
   },
   ChangePasswordMiddleware: async (req, res, next) => {

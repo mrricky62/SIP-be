@@ -21,6 +21,8 @@ module.exports = {
 
       if (body.password) {
         req.body.password = await Encrypt(body.password);
+      } else {
+        delete req.body.password;
       }
 
       next();
