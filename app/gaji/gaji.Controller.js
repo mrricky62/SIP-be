@@ -78,6 +78,19 @@ module.exports = {
       return InternalServerError(res, error, "Failed to create gaji");
     }
   },
+  ImportGaji: async (req, res) => {
+    try {
+      const data = req.body.data;
+      for (const iterator of data) {
+        await StoreGaji(iterator);
+      }
+
+      return Ok(res, {}, "Gaji imported successfully");
+    } catch (error) {
+      console.log(error);
+      return InternalServerError(res, error, "Failed to import gaji");
+    }
+  },
   EditGaji: async (req, res) => {
     try {
       await UpdateGaji(req.params.id, req.body);
