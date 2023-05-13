@@ -17,7 +17,9 @@ module.exports = {
       const result = await FetchGaji(userId);
 
       result.forEach((item) => {
-        item.tanggal = moment(result.tanggal).format("YYYY-MM");
+        item.tanggal = moment(item.tanggal).format("YYYY-MM");
+        item.bulan = moment(item.tanggal).format("MMMM");
+        item.tahun = moment(item.tanggal).format("YYYY");
 
         let total_potongan = 0;
         let total_tunjangan = 0;
@@ -87,7 +89,6 @@ module.exports = {
 
       return Ok(res, {}, "Gaji imported successfully");
     } catch (error) {
-      console.log(error);
       return InternalServerError(res, error, "Failed to import gaji");
     }
   },
