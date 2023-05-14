@@ -51,6 +51,17 @@ module.exports = {
       return InternalServerError(res, error, "Failed to create uang makan");
     }
   },
+  ImportUangMakan: async (req, res) => {
+    try {
+      for (const iterator of req.body.data) {
+        await StoreUangMakan(iterator);
+      }
+
+      return Ok(res, null, "Uang makan imported successfully");
+    } catch (error) {
+      return InternalServerError(res, error, "Failed to import uang makan");
+    }
+  },
   EditUangMakan: async (req, res) => {
     try {
       await UpdateUangMakan(req.params.id, req.body);

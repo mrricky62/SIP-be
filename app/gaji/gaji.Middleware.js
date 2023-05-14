@@ -23,12 +23,11 @@ module.exports = {
     try {
       const data = req.body.data;
 
-      let i = 2;
       for (const iterator of data) {
         const user = await FetchUserByNIP(iterator.nip);
 
         if (!user) {
-          const message = `NIP pegawai ${iterator.nip} tidak ditemukan pada baris ${i}`;
+          const message = `NIP pegawai ${iterator.nip} tidak ditemukan`;
           return BadRequest(res, {}, message);
         }
 
@@ -36,7 +35,6 @@ module.exports = {
 
         iterator.user_id = user.id;
         iterator.tanggal = new Date(iterator.tanggal);
-        i++;
       }
 
       req.body.data = data;
