@@ -1,5 +1,5 @@
 const { CreateSPDMiddleware } = require("./spd.Middleware");
-const { CreateSPD, GetSPD } = require("./spd.Controller");
+const { CreateSPD, GetSPD, GetSPDById } = require("./spd.Controller");
 
 const express = require("express");
 const router = express.Router();
@@ -22,6 +22,8 @@ const UploadDoc = multer({
 }).fields([{ name: "filepath", maxCount: 1 }]);
 
 router.get("/", GetSPD);
+router.get("/:id", GetSPDById);
+
 router.post("/", UploadDoc, CreateSPDMiddleware, CreateSPD);
 
 module.exports = router;

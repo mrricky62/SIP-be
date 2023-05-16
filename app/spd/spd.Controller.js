@@ -1,5 +1,5 @@
 const { InternalServerError, Ok } = require("../../utils/http-response");
-const { StoreSPD, FetchSPD } = require("./spd.Repository");
+const { StoreSPD, FetchSPD, FetchSPDById } = require("./spd.Repository");
 const moment = require("moment");
 
 module.exports = {
@@ -19,6 +19,17 @@ module.exports = {
           item.tanggal_spm = "-";
         }
       });
+
+      return Ok(res, result, "SPD fetched successfully");
+    } catch (error) {
+      return InternalServerError(res, error, "Failed to get SPD");
+    }
+  },
+  GetSPDById: async (req, res) => {
+    try {
+      const result = await FetchSPDById(req.params.id);
+
+      result.tanggal_spm = moment(result.tanggal_spm).format("YYYY-MM-DD");
 
       return Ok(res, result, "SPD fetched successfully");
     } catch (error) {

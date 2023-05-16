@@ -28,6 +28,16 @@ module.exports = {
       },
     });
   },
+  FetchSPDById: async (id) => {
+    return await prisma.tbl_spd.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        user: true,
+      },
+    });
+  },
   StoreSPD: async (payload) => {
     return await prisma.tbl_spd.create({
       data: payload,
