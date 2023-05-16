@@ -2,6 +2,7 @@ const {
   CreateUangLemburMiddleware,
   EditUangLemburMiddleware,
   DeleteUangLemburMiddleware,
+  ImportUangLemburMiddleware,
 } = require("./uang-lembur.Middleware");
 const {
   CreateUangLembur,
@@ -9,6 +10,7 @@ const {
   GetUangLemburById,
   EditUangLembur,
   DeleteUangLembur,
+  ImportUangLembur,
 } = require("./uang-lembur.Controller");
 
 const express = require("express");
@@ -18,6 +20,7 @@ router.get("/", GetUangLembur);
 router.get("/:id", GetUangLemburById);
 
 router.post("/", CreateUangLemburMiddleware, CreateUangLembur);
+router.post("/import", ImportUangLemburMiddleware, ImportUangLembur);
 
 router.put("/:id", EditUangLemburMiddleware, EditUangLembur);
 
