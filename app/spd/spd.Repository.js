@@ -51,4 +51,11 @@ module.exports = {
       data: payload,
     });
   },
+  DestroySPD: async (id) => {
+    return await prisma.tbl_spd.delete({
+      where: {
+        id: id,
+      },
+    });
+  },
 };

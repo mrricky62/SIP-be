@@ -5,6 +5,7 @@ const {
   FetchSPD,
   FetchSPDById,
   UpdateSPD,
+  DestroySPD,
 } = require("./spd.Repository");
 const moment = require("moment");
 
@@ -88,6 +89,15 @@ module.exports = {
     } catch (error) {
       console.log(error);
       return InternalServerError(res, error, "Failed to edit SPD");
+    }
+  },
+  DeleteSPD: async (req, res) => {
+    try {
+      await DestroySPD(req.params.id);
+
+      return Ok(res, {}, "SPD deleted successfully");
+    } catch (error) {
+      return InternalServerError(res, error, "Failed to delete SPD");
     }
   },
 };
