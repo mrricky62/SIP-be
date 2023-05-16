@@ -45,6 +45,18 @@ module.exports = {
       return InternalServerError(res, error, "Failed to create tunjangan");
     }
   },
+  ImportTunjangan: async (req, res) => {
+    try {
+      for (const iterator of req.body.data) {
+        await StoreTunjangan(iterator);
+      }
+
+      return Ok(res, {}, "Tunjangan imported successfully");
+    } catch (error) {
+      console.log(error);
+      return InternalServerError(res, error, "Failed to import tunjangan");
+    }
+  },
   EditTunjangan: async (req, res) => {
     try {
       await UpdateTunjangan(req.params.id, req.body);
