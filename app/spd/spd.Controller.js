@@ -35,7 +35,7 @@ module.exports = {
     try {
       const result = await FetchSPDById(req.params.id);
 
-      result.tanggal_spm = moment(result.tanggal_spm).format("YYYY-MM-DD");
+      result.tanggal_spm = moment(result.tanggal_spm).format("DD MMMM YYYY");
 
       return Ok(res, result, "SPD fetched successfully");
     } catch (error) {
