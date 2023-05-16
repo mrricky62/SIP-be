@@ -4,6 +4,7 @@ const {
   GetSPD,
   GetSPDById,
   ApproveSPD,
+  RejectSPD,
 } = require("./spd.Controller");
 
 const express = require("express");
@@ -32,5 +33,6 @@ router.get("/:id", GetSPDById);
 router.post("/", UploadDoc, CreateSPDMiddleware, CreateSPD);
 
 router.put("/approve/:id", EditSPDMiddleware, ApproveSPD);
+router.put("/reject/:id", EditSPDMiddleware, RejectSPD);
 
 module.exports = router;

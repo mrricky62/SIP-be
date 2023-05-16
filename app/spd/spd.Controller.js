@@ -57,12 +57,24 @@ module.exports = {
         ...req.body,
         tanggal_spm: new Date(),
         status: status.DISETUJUI,
+        catatan: "",
       });
 
       return Ok(res, {}, "SPD approved successfully");
     } catch (error) {
-      console.log(error);
       return InternalServerError(res, error, "Failed to approve SPD");
+    }
+  },
+  RejectSPD: async (req, res) => {
+    try {
+      await UpdateSPD(req.params.id, {
+        ...req.body,
+        status: status.DITOLAK,
+      });
+
+      return Ok(res, {}, "SPD rejected successfully");
+    } catch (error) {
+      return InternalServerError(res, error, "Failed to reject SPD");
     }
   },
 };
