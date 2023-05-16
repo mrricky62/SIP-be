@@ -18,6 +18,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json({ limit: "100mb" }));
 
 require("./routes")(app);
+app.get("/documents", express.static("public/documents"));
 
 const port = process.env.API_PORT || 3000;
 app.listen(port, () => {

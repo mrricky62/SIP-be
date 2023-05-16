@@ -17,7 +17,7 @@ module.exports = {
       const result = await FetchSPD(userId);
 
       result.forEach((item) => {
-        if (item.status === "DISETUJUI") {
+        if (item.status === status.DISETUJUI) {
           item.total = item.total.toLocaleString("id-ID");
           item.tanggal_spm = moment(item.tanggal_spm).format("DD MMMM YYYY");
         } else {
