@@ -77,4 +77,17 @@ module.exports = {
       return InternalServerError(res, error, "Failed to reject SPD");
     }
   },
+  EditSPD: async (req, res) => {
+    try {
+      await UpdateSPD(req.params.id, {
+        ...req.body,
+        status: status.PENDING,
+      });
+
+      return Ok(res, {}, "SPD edited successfully");
+    } catch (error) {
+      console.log(error);
+      return InternalServerError(res, error, "Failed to edit SPD");
+    }
+  },
 };
