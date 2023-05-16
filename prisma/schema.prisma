@@ -135,10 +135,9 @@ model tbl_uang_makan {
 
 model tbl_spd {
   id          String    @id @default(uuid())
-  filepath    String
-  no_st       String
-  no_spd      String
-  tanggal     DateTime  @default(now())
+  filepath    String?   @default("")
+  no_st       String?   @default("")
+  no_spd      String?   @default("")
   tanggal_spm DateTime?
   tujuan      String
   sifat       String
