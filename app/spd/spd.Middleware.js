@@ -1,4 +1,8 @@
-const { InternalServerError } = require("../../utils/http-response");
+const {
+  InternalServerError,
+  BadRequest,
+} = require("../../utils/http-response");
+const { FetchSPDById } = require("./spd.Repository");
 
 module.exports = {
   CreateSPDMiddleware: (req, res, next) => {
@@ -13,6 +17,22 @@ module.exports = {
         res,
         error,
         "Failed to create SPD in middleware"
+      );
+    }
+  },
+  EditSPDMiddleware: (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const spd = FetchSPDById(id);
+
+      if (!spd) return BadRequest(res, {}, "SPD not found");
+
+      next();
+    } catch (error) {
+      return InternalServerError(
+        res,
+        error,
+        "Failed to edit SPD in middleware"
       );
     }
   },

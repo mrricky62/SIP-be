@@ -1,5 +1,10 @@
-const { CreateSPDMiddleware } = require("./spd.Middleware");
-const { CreateSPD, GetSPD, GetSPDById } = require("./spd.Controller");
+const { CreateSPDMiddleware, EditSPDMiddleware } = require("./spd.Middleware");
+const {
+  CreateSPD,
+  GetSPD,
+  GetSPDById,
+  ApproveSPD,
+} = require("./spd.Controller");
 
 const express = require("express");
 const router = express.Router();
@@ -25,5 +30,7 @@ router.get("/", GetSPD);
 router.get("/:id", GetSPDById);
 
 router.post("/", UploadDoc, CreateSPDMiddleware, CreateSPD);
+
+router.put("/approve/:id", EditSPDMiddleware, ApproveSPD);
 
 module.exports = router;

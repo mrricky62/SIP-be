@@ -43,4 +43,12 @@ module.exports = {
       data: payload,
     });
   },
+  UpdateSPD: async (id, payload) => {
+    return await prisma.tbl_spd.update({
+      where: {
+        id: id,
+      },
+      data: payload,
+    });
+  },
 };

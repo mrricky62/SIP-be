@@ -1,5 +1,11 @@
+const status = require("../../constant/status");
 const { InternalServerError, Ok } = require("../../utils/http-response");
-const { StoreSPD, FetchSPD, FetchSPDById } = require("./spd.Repository");
+const {
+  StoreSPD,
+  FetchSPD,
+  FetchSPDById,
+  UpdateSPD,
+} = require("./spd.Repository");
 const moment = require("moment");
 
 module.exports = {
@@ -43,6 +49,20 @@ module.exports = {
       return Ok(res, null, "SPD created successfully");
     } catch (error) {
       return InternalServerError(res, error, "Failed to create SPD");
+    }
+  },
+  ApproveSPD: async (req, res) => {
+    try {
+      await UpdateSPD(req.params.id, {
+        ...req.body,
+        tanggal_spm: new Date(),
+        status: status.DISETUJUI,
+      });
+
+      return Ok(res, {}, "SPD approved successfully");
+    } catch (error) {
+      console.log(error);
+      return InternalServerError(res, error, "Failed to approve SPD");
     }
   },
 };
