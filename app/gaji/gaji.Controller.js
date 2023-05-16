@@ -89,7 +89,7 @@ module.exports = {
 
       return Ok(res, {}, "Gaji imported successfully");
     } catch (error) {
-      return InternalServerError(res, error, "Failed to import gaji");
+      return InternalServerError(res, error, "Format data tidak sesuai");
     }
   },
   EditGaji: async (req, res) => {

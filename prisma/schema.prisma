@@ -134,16 +134,23 @@ model tbl_uang_makan {
 }
 
 model tbl_spd {
-  id              String   @id @default(uuid())
-  tanggal         DateTime @default(now())
-  tanggal_spm     DateTime @default(now())
-  tujuan          String
-  sifat           String
-  uang_harian     Decimal? @default(0)
-  uang_transport  Decimal? @default(0)
-  uang_penginapan Decimal? @default(0)
-  total           Decimal? @default(0)
-  lama            Int?     @default(0)
+  id          String   @id @default(uuid())
+  filepath    String
+  no_st       String
+  no_spd      String
+  tanggal     DateTime @default(now())
+  tanggal_spm DateTime @default(now())
+  tujuan      String
+  sifat       String
+
+  uang_harian           Decimal? @default(0)
+  uang_transport_pergi  Decimal? @default(0)
+  uang_transport_pulang Decimal? @default(0)
+  uang_transport_dpd    Decimal? @default(0)
+  uang_penginapan       Decimal? @default(0)
+
+  total Decimal? @default(0)
+  lama  Int?     @default(0)
 
   status String @default("PENDING")
 

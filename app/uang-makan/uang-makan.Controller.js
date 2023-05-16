@@ -59,7 +59,7 @@ module.exports = {
 
       return Ok(res, null, "Uang makan imported successfully");
     } catch (error) {
-      return InternalServerError(res, error, "Failed to import uang makan");
+      return InternalServerError(res, error, "Format data tidak sesuai");
     }
   },
   EditUangMakan: async (req, res) => {
