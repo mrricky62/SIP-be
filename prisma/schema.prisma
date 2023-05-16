@@ -134,12 +134,12 @@ model tbl_uang_makan {
 }
 
 model tbl_spd {
-  id          String   @id @default(uuid())
+  id          String    @id @default(uuid())
   filepath    String
   no_st       String
   no_spd      String
-  tanggal     DateTime @default(now())
-  tanggal_spm DateTime @default(now())
+  tanggal     DateTime  @default(now())
+  tanggal_spm DateTime?
   tujuan      String
   sifat       String
 
@@ -152,7 +152,8 @@ model tbl_spd {
   total Decimal? @default(0)
   lama  Int?     @default(0)
 
-  status String @default("PENDING")
+  status  String  @default("PENDING")
+  catatan String? @default("")
 
   user_id String
   user    tbm_user @relation(fields: [user_id], references: [id])

@@ -3,8 +3,8 @@ const { InternalServerError } = require("../../utils/http-response");
 module.exports = {
   CreateSPDMiddleware: (req, res, next) => {
     try {
+      req.body.filepath = req.files.filepath[0].filename;
       req.body.tanggal = new Date(req.body.tanggal);
-      req.body.tanggal_spm = new Date(req.body.tanggal_spm);
       req.body.lama = parseInt(req.body.lama);
       req.body.user_id = req.user.id;
 
