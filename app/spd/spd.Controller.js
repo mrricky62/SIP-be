@@ -52,6 +52,19 @@ module.exports = {
       return InternalServerError(res, error, "Failed to create SPD");
     }
   },
+  ImportSPD: async (req, res) => {
+    try {
+      const data = req.body.data;
+      for (const iterator of data) {
+        await StoreSPD(iterator);
+      }
+
+      return Ok(res, null, "SPD imported successfully");
+    } catch (error) {
+      console.log(error);
+      return InternalServerError(res, error, "Failed to import SPD");
+    }
+  },
   ApproveSPD: async (req, res) => {
     try {
       await UpdateSPD(req.params.id, {
