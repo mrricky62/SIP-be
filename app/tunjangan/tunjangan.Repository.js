@@ -30,6 +30,14 @@ module.exports = {
       },
     });
   },
+  FetchTunjanganByIdUserAndTanggal: async (userId, tanggal) => {
+    return await prisma.tbl_tunjangan.findFirst({
+      where: {
+        user_id: userId,
+        tanggal: new Date(tanggal),
+      },
+    });
+  },
   StoreTunjangan: async (payload) => {
     return await prisma.tbl_tunjangan.create({
       data: payload,

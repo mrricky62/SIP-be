@@ -3,7 +3,10 @@ const {
   BadRequest,
 } = require("../../utils/http-response");
 const { FetchUserByNIP } = require("../user/user.repository");
-const { FetchTunjanganById } = require("./tunjangan.Repository");
+const {
+  FetchTunjanganById,
+  FetchTunjanganByIdUserAndTanggal,
+} = require("./tunjangan.Repository");
 
 module.exports = {
   CreateTunjanganMiddleware: async (req, res, next) => {
@@ -43,6 +46,41 @@ module.exports = {
         res,
         error,
         "Failed to create tunjangan in middleware"
+      );
+    }
+  },
+  ImportTunjanganPotonganMiddleware: async (req, res, next) => {
+    try {
+      const data = req.body.data;
+      for (const iterator of data) {
+        const user = await FetchUserByNIP(iterator.nip);
+        if (!user) {
+          const message = `NIP pegawai ${iterator.nip} tidak ditemukan`;
+          return BadRequest(res, {}, message);
+        }
+
+        const tunjangan = await FetchTunjanganByIdUserAndTanggal(
+          user.id,
+          iterator.tanggal
+        );
+        if (!tunjangan) {
+          const message = `Tunjangan untuk pegawai ${iterator.nip} pada tanggal ${iterator.tanggal} tidak ditemukan`;
+          return BadRequest(res, {}, message);
+        }
+
+        delete iterator.nip;
+        delete iterator.tanggal;
+
+        iterator.id = tunjangan.id;
+      }
+
+      req.body.data = data;
+      next();
+    } catch (error) {
+      return InternalServerError(
+        res,
+        error,
+        "Failed to create tunjangan (potongan) in middleware"
       );
     }
   },

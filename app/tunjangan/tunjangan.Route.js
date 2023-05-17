@@ -5,12 +5,14 @@ const {
   EditTunjangan,
   DeleteTunjangan,
   ImportTunjangan,
+  ImportTunjanganPotongan,
 } = require("./tunjangan.Controller");
 const {
   CreateTunjanganMiddleware,
   EditTunjanganMiddleware,
   DeleteTunjanganMiddleware,
   ImportTunjanganMiddleware,
+  ImportTunjanganPotonganMiddleware,
 } = require("./tunjangan.Middleware");
 
 const express = require("express");
@@ -21,6 +23,11 @@ router.get("/:id", GetTunjanganById);
 
 router.post("/", CreateTunjanganMiddleware, CreateTunjangan);
 router.post("/import", ImportTunjanganMiddleware, ImportTunjangan);
+router.post(
+  "/import-potongan",
+  ImportTunjanganPotonganMiddleware,
+  ImportTunjanganPotongan
+);
 
 router.put("/:id", EditTunjanganMiddleware, EditTunjangan);
 
