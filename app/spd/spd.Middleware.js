@@ -53,6 +53,7 @@ module.exports = {
 
       if (!spd) return BadRequest(res, {}, "SPD not found");
 
+      console.log(req.files);
       if (req.files) {
         req.body.filepath = req.files.filepath[0].filename;
       }
