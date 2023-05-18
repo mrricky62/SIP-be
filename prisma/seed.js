@@ -13,9 +13,9 @@ function seedUsers() {
         .create({
           data: {
             nip: n.nip,
-            nama: n.nmpeg,
-            pangkat: "Pengatur Muda",
-            golongan: n.gol,
+            nama: n.nama,
+            pangkat: n.pangkat,
+            golongan: n.golongan,
             password: await Encrypt(n.nip),
           },
         })
