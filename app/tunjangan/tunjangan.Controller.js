@@ -17,7 +17,7 @@ module.exports = {
       const result = await FetchTunjangan(userId);
 
       result.forEach((item) => {
-        item.tanggal = moment(result.tanggal).format("YYYY-MM");
+        item.tanggal = moment(item.tanggal).format("YYYY-MM");
       });
 
       return Ok(res, result, "Tunjangan fetched successfully");

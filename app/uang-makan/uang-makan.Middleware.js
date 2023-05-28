@@ -37,11 +37,13 @@ module.exports = {
         iterator.jml_hari = parseInt(iterator.jml_hari);
         iterator.tanggal = new Date(iterator.tanggal);
         iterator.tanggal_spm = new Date(iterator.tanggal_spm);
+        iterator.kdgol = iterator.kdgol.toString();
       }
 
       req.body.data = data;
       next();
     } catch (error) {
+      console.log(error);
       return InternalServerError(
         res,
         error,

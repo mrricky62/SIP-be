@@ -59,6 +59,7 @@ module.exports = {
 
       return Ok(res, null, "Uang makan imported successfully");
     } catch (error) {
+      console.log(error);
       return InternalServerError(res, error, "Format data tidak sesuai");
     }
   },
