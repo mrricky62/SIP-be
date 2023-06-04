@@ -1,4 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
+const status = require("../../constant/status");
 const prisma = new PrismaClient();
 
 module.exports = {
@@ -27,6 +28,7 @@ module.exports = {
     return await prisma.tbl_spd.findMany({
       where: {
         user_id: userId,
+        status: status.DISETUJUI,
       },
     });
   },
