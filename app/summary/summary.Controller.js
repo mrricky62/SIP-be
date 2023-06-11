@@ -45,6 +45,7 @@ module.exports = {
         item.total_potongan = total_potongan;
         item.total_tunjangan = total_tunjangan;
       });
+
       const gaji = AllGaji.filter((item) => {
         return (
           moment(item.tanggal).format("YYYY-MM") ===
@@ -84,13 +85,28 @@ module.exports = {
         );
       });
 
+      let jumlah_kotor = 0;
+      jumlah_kotor =
+        +gaji[0].gaji_pokok +
+        +gaji[0].total_tunjangan +
+        +uang_makan[0].bersih +
+        +uang_lembur[0].bersih +
+        +tunjangan[0].tunj_dibayar;
+
+      let jumlah_bersih = 0;
+      jumlah_bersih = +jumlah_kotor - +gaji[0].total_potongan;
+
       const payload = {
+        bulan: moment(tanggal).format("MMMM"),
+        tahun: moment(tanggal).format("YYYY"),
         pegawai,
         gaji: gaji.length > 0 ? gaji[0] : false,
         tunjangan: tunjangan.length > 0 ? tunjangan[0] : false,
         uang_makan: uang_makan.length > 0 ? uang_makan[0] : false,
         spd: spd.length > 0 ? spd[0] : false,
         uang_lembur: uang_lembur.length > 0 ? uang_lembur[0] : false,
+        jumlah_kotor: jumlah_kotor,
+        jumlah_bersih: jumlah_bersih,
       };
 
       return Ok(res, payload, "Success get summary");
