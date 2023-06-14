@@ -1,4 +1,5 @@
 const moment = require("moment/moment");
+require("moment/locale/id");
 const { InternalServerError, Ok } = require("../../utils/http-response");
 const {
   StoreGaji,
@@ -17,7 +18,7 @@ module.exports = {
       const result = await FetchGaji(userId);
 
       result.forEach((item) => {
-        item.tanggal = moment(item.tanggal).format("YYYY-MM");
+        item.tanggal = moment(item.tanggal).format("YYYY-MMMM");
         item.bulan = moment(item.tanggal).format("MMMM");
         item.tahun = moment(item.tanggal).format("YYYY");
 
