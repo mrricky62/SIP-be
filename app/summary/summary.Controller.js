@@ -11,9 +11,7 @@ const {
   FetchUangLemburSummary,
 } = require("./summary.Repository");
 const moment = require("moment");
-console.log(moment.locale()); // en
-moment.locale("id");
-
+require("moment/locale/id");
 module.exports = {
   GetSummary: async (req, res) => {
     try {
