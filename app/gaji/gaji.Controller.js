@@ -18,7 +18,7 @@ module.exports = {
       const result = await FetchGaji(userId);
 
       result.forEach((item) => {
-        item.tanggal = moment(item.tanggal).format("YYYY-MMMM");
+        item.tanggal = moment(item.tanggal).format("YYYY-MM");
         item.bulan = moment(item.tanggal).format("MMMM");
         item.tahun = moment(item.tanggal).format("YYYY");
 

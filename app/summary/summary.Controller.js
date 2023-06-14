@@ -11,7 +11,6 @@ const {
   FetchUangLemburSummary,
 } = require("./summary.Repository");
 const moment = require("moment");
-require("moment/locale/id");
 module.exports = {
   GetSummary: async (req, res) => {
     try {
