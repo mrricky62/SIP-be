@@ -88,14 +88,20 @@ module.exports = {
       let jumlah_bersih = 0;
 
       jumlah_kotor =
-        +gaji[0].gaji_pokok ||
-        0 + +gaji[0].total_tunjangan ||
-        0 + +uang_makan[0].bersih ||
-        0 + +uang_lembur[0].bersih ||
-        0 + +tunjangan[0].tunj_dibayar ||
-        0;
+        gaji.length > 0
+          ? +gaji[0].gaji_pokok
+          : 0 + gaji.length > 0
+          ? +gaji[0].total_tunjangan
+          : 0 + uang_makan.length > 0
+          ? +uang_makan[0].bersih
+          : 0 + uang_lembur.length > 0
+          ? +uang_lembur[0].bersih
+          : 0 + tunjangan.length > 0
+          ? +tunjangan[0].tunj_dibayar
+          : 0;
 
-      jumlah_bersih = +jumlah_kotor - +gaji[0].total_potongan || 0;
+      jumlah_bersih =
+        +jumlah_kotor - gaji.length > 0 ? +gaji[0].total_potongan : 0;
 
       const payload = {
         bulan: moment(tanggal).format("MMMM"),
