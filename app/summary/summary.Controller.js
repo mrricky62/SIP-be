@@ -86,15 +86,17 @@ module.exports = {
       });
 
       let jumlah_kotor = 0;
-      jumlah_kotor =
-        +gaji[0].gaji_pokok +
-        +gaji[0].total_tunjangan +
-        +uang_makan[0].bersih +
-        +uang_lembur[0].bersih +
-        +tunjangan[0].tunj_dibayar;
-
       let jumlah_bersih = 0;
-      jumlah_bersih = +jumlah_kotor - +gaji[0].total_potongan;
+
+      jumlah_kotor =
+        +gaji[0].gaji_pokok ||
+        0 + +gaji[0].total_tunjangan ||
+        0 + +uang_makan[0].bersih ||
+        0 + +uang_lembur[0].bersih ||
+        0 + +tunjangan[0].tunj_dibayar ||
+        0;
+
+      jumlah_bersih = +jumlah_kotor - +gaji[0].total_potongan || 0;
 
       const payload = {
         bulan: moment(tanggal).format("MMMM"),
@@ -111,6 +113,7 @@ module.exports = {
 
       return Ok(res, payload, "Success get summary");
     } catch (error) {
+      console.log(error);
       return InternalServerError(res, error, "Failed to get summary");
     }
   },
