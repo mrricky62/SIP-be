@@ -85,15 +85,24 @@ module.exports = {
       });
 
       let jumlah_kotor = 0;
-      jumlah_kotor =
-        +gaji[0].gaji_pokok +
-        +gaji[0].total_tunjangan +
-        +uang_makan[0].bersih +
-        +uang_lembur[0].bersih +
-        +tunjangan[0].tunj_dibayar;
-
       let jumlah_bersih = 0;
-      jumlah_bersih = +jumlah_kotor - +gaji[0].total_potongan;
+
+      if (
+        gaji.length > 1 &&
+        tunjangan.length > 1 &&
+        uang_makan.length > 1 &&
+        spd.length > 1 &&
+        uang_lembur.length > 1
+      ) {
+        jumlah_kotor =
+          +gaji[0].gaji_pokok +
+          +gaji[0].total_tunjangan +
+          +uang_makan[0].bersih +
+          +uang_lembur[0].bersih +
+          +tunjangan[0].tunj_dibayar;
+
+        jumlah_bersih = +jumlah_kotor - +gaji[0].total_potongan;
+      }
 
       const payload = {
         bulan: moment(tanggal).format("MMMM"),
@@ -110,6 +119,7 @@ module.exports = {
 
       return Ok(res, payload, "Success get summary");
     } catch (error) {
+      console.log(error);
       return InternalServerError(res, error, "Failed to get summary");
     }
   },
