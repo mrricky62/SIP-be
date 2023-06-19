@@ -21,7 +21,7 @@ module.exports = {
         item.tanggal = moment(item.tanggal).format("YYYY-MM");
         item.bulan = moment(item.tanggal).format("MMMM");
         item.tahun = moment(item.tanggal).format("YYYY");
-        item.jumlah_jam = +item.jam_kerja + +item.jam_libur + +item.jam_makan;
+        item.jumlah_jam = +item.jam_kerja + +item.jam_libur;
       });
 
       return Ok(res, result, "Uang Lembur fetched successfully");
@@ -34,11 +34,10 @@ module.exports = {
       const result = await FetchUangLemburById(req.params.id);
 
       result.tanggal_spm = moment(result.tanggal_spm).format("YYYY-MM-DD");
-      result.tanggal = moment(result.tanggal).format("YYYY-MM");
+      result.tanggal = moment(result.tanggal).format("MMMM YYYY");
       result.bulan = moment(result.tanggal).format("MMMM");
       result.tahun = moment(result.tanggal).format("YYYY");
-      result.jumlah_jam =
-        +result.jam_kerja + +result.jam_libur + +result.jam_makan;
+      result.jumlah_jam = +result.jam_kerja + +result.jam_libur;
 
       return Ok(res, result, "Uang Lembur fetched successfully");
     } catch (error) {
