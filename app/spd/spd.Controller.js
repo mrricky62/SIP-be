@@ -22,7 +22,7 @@ module.exports = {
           item.total = item.total.toLocaleString("id-ID");
           item.tanggal_spm = moment(item.tanggal_spm).format("DD MMMM YYYY");
         } else {
-          item.total = "-";
+          item.total = item.total.toLocaleString("id-ID");
           item.tanggal_spm = "-";
         }
       });
