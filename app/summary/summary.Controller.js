@@ -1,15 +1,5 @@
-const {
-  InternalServerError,
-  BadRequest,
-  Ok,
-} = require("../../utils/http-response");
-const {
-  FetchGajiSummary,
-  FetchTunjanganSummary,
-  FetchUangMakanSummary,
-  FetchSPDSummary,
-  FetchUangLemburSummary,
-} = require("./summary.Repository");
+const { InternalServerError, BadRequest, Ok } = require("../../utils/http-response");
+const { FetchGajiSummary, FetchTunjanganSummary, FetchUangMakanSummary, FetchSPDSummary, FetchUangLemburSummary } = require("./summary.Repository");
 const moment = require("moment");
 
 module.exports = {
@@ -47,62 +37,45 @@ module.exports = {
       });
 
       const gaji = AllGaji.filter((item) => {
-        return (
-          moment(item.tanggal).format("YYYY-MM") ===
-          moment(tanggal).format("YYYY-MM")
-        );
+        return moment(item.tanggal).format("YYYY-MM") === moment(tanggal).format("YYYY-MM");
       });
 
       const AllTunjangan = await FetchTunjanganSummary(id);
       const tunjangan = AllTunjangan.filter((item) => {
-        return (
-          moment(item.tanggal).format("YYYY-MM") ===
-          moment(tanggal).format("YYYY-MM")
-        );
+        return moment(item.tanggal).format("YYYY-MM") === moment(tanggal).format("YYYY-MM");
       });
 
       const AllUangMakan = await FetchUangMakanSummary(id);
       const uang_makan = AllUangMakan.filter((item) => {
-        return (
-          moment(item.tanggal_spm).format("YYYY-MM") ===
-          moment(tanggal).format("YYYY-MM")
-        );
+        return moment(item.tanggal_spm).format("YYYY-MM") === moment(tanggal).format("YYYY-MM");
       });
 
       const AllSPD = await FetchSPDSummary(id);
       const spd = AllSPD.filter((item) => {
-        return (
-          moment(item.tanggal_spm).format("YYYY-MM") ===
-          moment(tanggal).format("YYYY-MM")
-        );
+        return moment(item.tanggal_spm).format("YYYY-MM") === moment(tanggal).format("YYYY-MM");
       });
 
       const AllUangLembur = await FetchUangLemburSummary(id);
       const uang_lembur = AllUangLembur.filter((item) => {
-        return (
-          moment(item.tanggal_spm).format("YYYY-MM") ===
-          moment(tanggal).format("YYYY-MM")
-        );
+        return moment(item.tanggal_spm).format("YYYY-MM") === moment(tanggal).format("YYYY-MM");
       });
 
       let jumlah_kotor = 0;
       let jumlah_bersih = 0;
 
-      jumlah_kotor =
-        gaji.length > 0
-          ? +gaji[0].gaji_pokok
-          : 0 + gaji.length > 0
-          ? +gaji[0].total_tunjangan
-          : 0 + uang_makan.length > 0
-          ? +uang_makan[0].bersih
-          : 0 + uang_lembur.length > 0
-          ? +uang_lembur[0].bersih
-          : 0 + tunjangan.length > 0
-          ? +tunjangan[0].tunj_dibayar
-          : 0;
+      let gaji_pokok = gaji.length > 0 ? +gaji[0].gaji_pokok : 0;
+      let total_tunjangan = gaji.length > 0 ? +gaji[0].total_tunjangan : 0;
+      let total_potongan = gaji.length > 0 ? +gaji[0].total_potongan : 0;
+      let bersih_uang_makan = uang_makan.length > 0 ? +uang_makan[0].bersih : 0;
+      let bersih_uang_lembur = uang_lembur.length > 0 ? +uang_lembur[0].bersih : 0;
+      let tunj_dibayar = tunjangan.length > 0 ? +tunjangan[0].tunj_dibayar : 0;
 
-      jumlah_bersih =
-        +jumlah_kotor - gaji.length > 0 ? +gaji[0].total_potongan : 0;
+      jumlah_kotor = gaji_pokok + total_tunjangan + bersih_uang_makan + bersih_uang_lembur + tunj_dibayar;
+
+      console.log("jumlah_kotor", jumlah_kotor);
+      console.log("total_potongan", total_potongan);
+
+      jumlah_bersih = +jumlah_kotor - +total_potongan;
 
       const payload = {
         bulan: moment(tanggal).format("MMMM"),
